@@ -1,54 +1,54 @@
-package project;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
-public class insertInterface extends JFrame implements ActionListener {
-    static ArrayList<Integer> IDs = new ArrayList<>();
+public class shipmentInterface extends JFrame implements ActionListener {
+    ArrayList<Integer> IDs = insertInterface.IDs;
     AVLTree tree = firstInterface.tree;
 
-    Border border = BorderFactory.createLineBorder(Color.red, 3); // will be added to the empty text field
     ImageIcon backImage;
     JLabel label;
 
     JTextField nameTextField;
     JTextField IDTextField;
-    JTextField priceTextField;
+    JTextField ProductIDTextField;
     JTextField priorityTextField;
     JTextField quantityTextField;
+    JTextField DateTextField;
 
     JButton submitButton;
     JButton backButton;
 
     String Name;
+    int Product_ID;
     int ID;
-    int Priority;
+    String Date;
     int Quantity;
-    int Price;
+    int priority;
 
     JLabel nameLabel;
+    JLabel ProductIDLabel;
     JLabel IDLabel;
-    JLabel priceLabel;
     JLabel quantityLabel;
     JLabel priorityLabel;
+    JLabel dateLabel;
 
-    insertInterface() {
+    shipmentInterface() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\project\\images\\first.png");
+        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);
@@ -71,72 +71,85 @@ public class insertInterface extends JFrame implements ActionListener {
         backButton.addActionListener(this);
 
         nameTextField = new JTextField();
-        nameTextField.setBounds(520, 155, 170, 50);
+        nameTextField.setBounds(520, 105, 170, 50);
         nameTextField.setFont(new Font("consolas", Font.PLAIN, 15));
         nameTextField.setBackground(Color.white);
         nameTextField.setCaretColor(Color.black);
 
-        nameLabel = new JLabel("Name");
-        nameLabel.setBounds(430, 160, 70, 40);
+        nameLabel = new JLabel("Destination");
+        nameLabel.setBounds(350, 110, 150, 40);
         nameLabel.setForeground(Color.white);
         nameLabel.setFont(new Font("consolas", Font.PLAIN, 25));
 
+        ProductIDTextField = new JTextField();
+        ProductIDTextField.setBounds(520, 165, 170, 50);
+        ProductIDTextField.setFont(new Font("consolas", Font.PLAIN, 15));
+        ProductIDTextField.setBackground(Color.white);
+        ProductIDTextField.setCaretColor(Color.black);
+
+        ProductIDLabel = new JLabel("Product ID");
+        ProductIDLabel.setBounds(350, 168, 150, 40);
+        ProductIDLabel.setForeground(Color.white);
+        ProductIDLabel.setFont(new Font("consolas", Font.PLAIN, 25));
+
         IDTextField = new JTextField();
-        IDTextField.setBounds(520, 216, 170, 50);
+        IDTextField.setBounds(520, 230, 170, 50);
         IDTextField.setFont(new Font("consolas", Font.PLAIN, 15));
         IDTextField.setBackground(Color.white);
         IDTextField.setCaretColor(Color.black);
 
-        IDLabel = new JLabel("ID");
-        IDLabel.setBounds(430, 220, 70, 40);
+        IDLabel = new JLabel("Shipment ID");
+        IDLabel.setBounds(350, 235, 150, 40);
         IDLabel.setForeground(Color.white);
         IDLabel.setFont(new Font("consolas", Font.PLAIN, 25));
 
         quantityTextField = new JTextField();
-        quantityTextField.setBounds(520, 273, 170, 50);
+        quantityTextField.setBounds(520, 285, 170, 50);
         quantityTextField.setFont(new Font("consolas", Font.PLAIN, 15));
         quantityTextField.setBackground(Color.white);
         quantityTextField.setCaretColor(Color.black);
 
         quantityLabel = new JLabel("Quantity");
-        quantityLabel.setBounds(420, 275, 100, 40);
+        quantityLabel.setBounds(350, 289, 150, 40);
         quantityLabel.setForeground(Color.white);
-        quantityLabel.setFont(new Font("consolas", Font.PLAIN, 20));
+        quantityLabel.setFont(new Font("consolas", Font.PLAIN, 25));
 
         priorityTextField = new JTextField();
-        priorityTextField.setBounds(520, 328, 170, 50);
+        priorityTextField.setBounds(520, 345, 170, 50);
         priorityTextField.setFont(new Font("consolas", Font.PLAIN, 15));
         priorityTextField.setBackground(Color.white);
         priorityTextField.setCaretColor(Color.black);
 
         priorityLabel = new JLabel("Priority");
-        priorityLabel.setBounds(420, 330, 100, 40);
+        priorityLabel.setBounds(350, 348, 150, 40);
         priorityLabel.setForeground(Color.white);
-        priorityLabel.setFont(new Font("consolas", Font.PLAIN, 20));
+        priorityLabel.setFont(new Font("consolas", Font.PLAIN, 25));
 
-        priceTextField = new JTextField();
-        priceTextField.setBounds(520, 384, 170, 50);
-        priceTextField.setFont(new Font("consolas", Font.PLAIN, 15));
-        priceTextField.setBackground(Color.white);
-        priceTextField.setCaretColor(Color.black);
+        DateTextField = new JTextField();
+        DateTextField.setBounds(520, 400, 170, 50);
+        DateTextField.setFont(new Font("consolas", Font.PLAIN, 15));
+        DateTextField.setBackground(Color.white);
+        DateTextField.setCaretColor(Color.black);
 
-        priceLabel = new JLabel("Price");
-        priceLabel.setBounds(420, 386, 100, 40);
-        priceLabel.setForeground(Color.white);
-        priceLabel.setFont(new Font("consolas", Font.PLAIN, 20));
+        dateLabel = new JLabel("Date");
+        dateLabel.setBounds(350, 400, 150, 40);
+        dateLabel.setForeground(Color.white);
+        dateLabel.setFont(new Font("consolas", Font.PLAIN, 25));
 
         label.add(nameTextField);
         label.add(IDTextField);
         label.add(priorityTextField);
         label.add(quantityTextField);
-        label.add(priceTextField);
+        label.add(DateTextField);
+        label.add(ProductIDTextField);
         label.add(submitButton);
         label.add(backButton);
         label.add(nameLabel);
         label.add(IDLabel);
-        label.add(priceLabel);
         label.add(quantityLabel);
         label.add(priorityLabel);
+        label.add(dateLabel);
+        label.add(ProductIDLabel);
 
         this.add(label);
         this.setLocationRelativeTo(null);
@@ -162,26 +175,38 @@ public class insertInterface extends JFrame implements ActionListener {
 
         if (e.getSource() == submitButton) {
             Name = nameTextField.getText().strip();
-            ID = convertToInteger(IDTextField.getText().strip());
-            Price = convertToInteger(priceTextField.getText().strip());
-            Priority = convertToInteger(priorityTextField.getText().strip());
+            Product_ID = convertToInteger(ProductIDTextField.getText().strip());
+            Date = DateTextField.getText().strip();
             Quantity = convertToInteger(quantityTextField.getText().strip());
+            priority = convertToInteger(priorityTextField.getText().strip());
+            ID = convertToInteger(IDTextField.getText().strip());
 
-            if (Name.isEmpty() || IDTextField.getText().isEmpty() || priorityTextField.getText().isEmpty()
+            if (Name.isEmpty() || IDTextField.getText().isEmpty() || Date.isEmpty()
                     || quantityTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the text fields please",
                         " ", JOptionPane.ERROR_MESSAGE);
             } else {
 
-                boolean check = IDs.contains(ID);
-                if (check) {
-                    JOptionPane.showMessageDialog(null, "Change the ID",
+                if (!IDs.contains(Product_ID)) {
+                    JOptionPane.showMessageDialog(null, "There is no product with this ID",
                             " ", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    tree.insert(new Node(ID, Name, Price, Quantity, Priority));
+                    Node product = tree.search(Product_ID);
+                    if (product.quantity < Quantity || Quantity < 0) {
+                        JOptionPane.showMessageDialog(null, "We don't have that much quantity",
+                                " ", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        tree.search(Product_ID).quantity -= Quantity;
+
+                        addShipment.list.add(new addShipment(Name, ID, Product_ID, Quantity, priority, Date));
+                        JOptionPane.showMessageDialog(null, "The shipment is done.",
+                                " ", JOptionPane.INFORMATION_MESSAGE);
+                    }
 
                 }
             }
         }
+
     }
+
 }

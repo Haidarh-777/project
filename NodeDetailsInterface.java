@@ -1,4 +1,3 @@
-package project;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,8 +66,7 @@ public class NodeDetailsInterface extends JFrame implements ActionListener {
         return "<html>ID: " + node.id +
                 "<br>Name: " + node.name +
                 "<br>Price: " + node.price +
-                "<br>Quantity: " + node.quantity +
-                "<br>Priority: " + node.priority + "</html>";
+                "<br>Quantity: " + node.quantity + "</html>";
     }
 
     @Override

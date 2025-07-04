@@ -1,7 +1,9 @@
-package project;
+
+import java.util.ArrayList;
 
 public class AVLTree {
     static Node root;
+    ArrayList<Integer> IDs = insertInterface.IDs;
 
     int height(Node N) {
         if (N == null)
@@ -115,6 +117,7 @@ public class AVLTree {
             root.right = delete(root.right, key);
 
         else {
+            IDs.remove(root.id);
             if ((root.left == null) || (root.right == null)) {
                 Node temp = null;
                 if (root.left != null)
@@ -134,7 +137,6 @@ public class AVLTree {
                 root.name = temp.name;
                 root.price = temp.price;
                 root.quantity = temp.quantity;
-                root.priority = temp.priority;
 
                 root.right = delete(root.right, temp.id);
             }

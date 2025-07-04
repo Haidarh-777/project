@@ -1,4 +1,3 @@
-package project;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,21 +17,31 @@ public class firstInterface extends JFrame implements ActionListener {
     JButton serachButton;
     JButton printButton;
     JButton exitButton;
+    JButton addButton;
 
     firstInterface() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\project\\images\\first.png");
+        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);
         label.setIcon(backImage);
 
-        InsertButton = new JButton("Insert");
-        InsertButton.setFont(new Font("consolas", Font.PLAIN, 25));
-        InsertButton.setBounds(530, 150, 180, 80);
+        addButton = new JButton("Add Shipment");
+        addButton.setFont(new Font("consolas", Font.PLAIN, 22));
+        addButton.setBounds(525, 50, 195, 80);
+        addButton.setBackground(Color.ORANGE);
+        addButton.setForeground(Color.white);
+        addButton.setFocusable(false);
+        addButton.setEnabled(true);
+        addButton.addActionListener(this);
+
+        InsertButton = new JButton("Insert Product");
+        InsertButton.setFont(new Font("consolas", Font.PLAIN, 20));
+        InsertButton.setBounds(525, 150, 195, 80);
         InsertButton.setBackground(Color.ORANGE);
         InsertButton.setForeground(Color.white);
         InsertButton.setFocusable(false);
@@ -41,7 +50,7 @@ public class firstInterface extends JFrame implements ActionListener {
 
         serachButton = new JButton("Search");
         serachButton.setFont(new Font("consolas", Font.PLAIN, 25));
-        serachButton.setBounds(530, 250, 180, 80);
+        serachButton.setBounds(525, 250, 195, 80);
         serachButton.setBackground(Color.ORANGE);
         serachButton.setForeground(Color.white);
         serachButton.setFocusable(false);
@@ -50,7 +59,7 @@ public class firstInterface extends JFrame implements ActionListener {
 
         printButton = new JButton("Print Tree");
         printButton.setFont(new Font("consolas", Font.PLAIN, 25));
-        printButton.setBounds(530, 350, 180, 80);
+        printButton.setBounds(525, 350, 195, 80);
         printButton.setBackground(Color.ORANGE);
         printButton.setForeground(Color.white);
         printButton.setFocusable(false);
@@ -59,13 +68,14 @@ public class firstInterface extends JFrame implements ActionListener {
 
         exitButton = new JButton("Exit");
         exitButton.setFont(new Font("consolas", Font.PLAIN, 25));
-        exitButton.setBounds(530, 450, 180, 80);
+        exitButton.setBounds(525, 450, 195, 80);
         exitButton.setBackground(Color.ORANGE);
         exitButton.setForeground(Color.white);
         exitButton.setFocusable(false);
         exitButton.setEnabled(true);
         exitButton.addActionListener(this);
 
+        label.add(addButton);
         label.add(InsertButton);
         label.add(serachButton);
         label.add(printButton);
@@ -79,6 +89,10 @@ public class firstInterface extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
+            new shipmentInterface();
+            this.dispose();
+        }
         if (e.getSource() == InsertButton) {
             new insertInterface();
             this.dispose();
