@@ -3,6 +3,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -15,6 +18,7 @@ import javax.swing.JTextField;
 public class shipmentInterface extends JFrame implements ActionListener {
     ArrayList<Integer> IDs = insertInterface.IDs;
     AVLTree tree = firstInterface.tree;
+    BTree bTree = new BTree(3);
 
     ImageIcon backImage;
     JLabel label;
@@ -48,7 +52,7 @@ public class shipmentInterface extends JFrame implements ActionListener {
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
+        backImage = new ImageIcon("images/first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);
@@ -166,6 +170,31 @@ public class shipmentInterface extends JFrame implements ActionListener {
         }
     }
 
+    public boolean isFutureDate(String dateStr) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+            LocalDate inputDate = LocalDate.parse(dateStr, formatter);
+
+            LocalDate today = LocalDate.now();
+
+            return inputDate.isAfter(today);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please use yyyy/MM/dd");
+            return false;
+        }
+    }
+
+    public LocalDate parseToDate(String dateStr) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            return LocalDate.parse(dateStr, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Expected yyyy/MM/dd");
+            return null;
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
@@ -180,11 +209,18 @@ public class shipmentInterface extends JFrame implements ActionListener {
             Quantity = convertToInteger(quantityTextField.getText().strip());
             priority = convertToInteger(priorityTextField.getText().strip());
             ID = convertToInteger(IDTextField.getText().strip());
+            LocalDate ld = parseToDate(Date);
+            boolean checkDate = ld.isBefore(LocalDate.now());
 
             if (Name.isEmpty() || IDTextField.getText().isEmpty() || Date.isEmpty()
                     || quantityTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the text fields please",
                         " ", JOptionPane.ERROR_MESSAGE);
+
+            } else if (checkDate) {
+                JOptionPane.showMessageDialog(null, "Invalid date format or Old date , Please check :)",
+                        " ", JOptionPane.ERROR_MESSAGE);
+
             } else {
 
                 if (!IDs.contains(Product_ID)) {
@@ -197,8 +233,10 @@ public class shipmentInterface extends JFrame implements ActionListener {
                                 " ", JOptionPane.ERROR_MESSAGE);
                     } else {
                         tree.search(Product_ID).quantity -= Quantity;
-
-                        addShipment.list.add(new addShipment(Name, ID, Product_ID, Quantity, priority, Date));
+                        addShipment shipment = new addShipment(Name, ID, Product_ID, Quantity, priority, Date);
+                        // addShipment.list.add(new addShipment(Name, ID, Product_ID, Quantity,
+                        // priority, Date));
+                        bTree.insert(shipment);
                         JOptionPane.showMessageDialog(null, "The shipment is done.",
                                 " ", JOptionPane.INFORMATION_MESSAGE);
                     }

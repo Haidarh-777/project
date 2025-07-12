@@ -1,7 +1,7 @@
 
 import java.util.ArrayList;
 
-public class AVLTree {
+public class AVLTree extends BS_Tree {
     static Node root;
     ArrayList<Integer> IDs = insertInterface.IDs;
 
@@ -117,7 +117,8 @@ public class AVLTree {
             root.right = delete(root.right, key);
 
         else {
-            IDs.remove(root.id);
+            IDs.remove(IDs.indexOf(root.id));
+
             if ((root.left == null) || (root.right == null)) {
                 Node temp = null;
                 if (root.left != null)

@@ -13,7 +13,9 @@ import javax.swing.JTextField;
 
 public class insertInterface extends JFrame implements ActionListener {
     static ArrayList<Integer> IDs = new ArrayList<>();
+
     AVLTree tree = firstInterface.tree;
+    BS_Tree bs_tree = firstInterface.BS_tree;
 
     ImageIcon backImage;
     JLabel label;
@@ -42,7 +44,7 @@ public class insertInterface extends JFrame implements ActionListener {
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
+        backImage = new ImageIcon("images/first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);
@@ -159,7 +161,10 @@ public class insertInterface extends JFrame implements ActionListener {
                             " ", JOptionPane.ERROR_MESSAGE);
                 } else {
                     tree.insert(new Node(ID, Name, Price, Quantity));
+                    bs_tree.insert(new Node(ID, Name, Price, Quantity));
                     IDs.add(ID);
+                    JOptionPane.showMessageDialog(null, " The product is added :)",
+                            " ", JOptionPane.INFORMATION_MESSAGE);
 
                 }
             }

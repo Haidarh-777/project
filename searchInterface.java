@@ -48,7 +48,7 @@ public class searchInterface extends JFrame implements ActionListener {
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
+        backImage = new ImageIcon("images/first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);

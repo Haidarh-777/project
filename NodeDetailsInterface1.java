@@ -1,64 +1,67 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NodeDetailsInterface extends JFrame implements ActionListener {
+public class NodeDetailsInterface1 extends JFrame implements ActionListener {
     Node node;
     AVLTree tree;
+    BS_Tree bs_Tree;
     JFrame parentFrame;
     JLabel infoLabel;
     JLabel label;
     JButton editPriceButton, editQuantityButton, deleteButton;
     ImageIcon backImage;
 
-    NodeDetailsInterface(Node node, AVLTree tree, JFrame parentFrame) {
+    NodeDetailsInterface1(Node node, AVLTree tree, BS_Tree bs_Tree, JFrame parentFrame) {
         this.node = node;
         this.tree = tree;
+        this.bs_Tree = bs_Tree;
         this.parentFrame = parentFrame;
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\project\\images\\first.png");
+        backImage = new ImageIcon("images/first.png");
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(400, 300);
-        this.setLayout(new FlowLayout());
+        this.setLayout(null);
         this.setLocationRelativeTo(null);
 
         label = new JLabel();
         label.setBounds(0, 0, 400, 300);
         label.setIcon(backImage);
+        label.setLayout(null);
 
         infoLabel = new JLabel(getNodeInfo());
-        infoLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
+        infoLabel.setFont(new Font("Consolas", Font.PLAIN, 16));
         infoLabel.setForeground(Color.orange);
-        infoLabel.setBackground(Color.white);
+        infoLabel.setBounds(50, 30, 300, 100);
 
         editPriceButton = new JButton("Edit Price");
         editQuantityButton = new JButton("Edit Quantity");
         deleteButton = new JButton("Delete");
 
-        editPriceButton.setFocusable(false);
-        editQuantityButton.setFocusable(false);
-        deleteButton.setFocusable(false);
+        JButton[] buttons = { editPriceButton, editQuantityButton, deleteButton };
+        for (JButton btn : buttons) {
+            btn.setFocusable(false);
+            btn.setBackground(Color.ORANGE);
+            btn.setForeground(Color.white);
+        }
 
-        editPriceButton.setBackground(Color.ORANGE);
-        editQuantityButton.setBackground(Color.ORANGE);
-        deleteButton.setBackground(Color.ORANGE);
-
-        editPriceButton.setForeground(Color.white);
-        editQuantityButton.setForeground(Color.white);
-        deleteButton.setForeground(Color.white);
+        editPriceButton.setBounds(50, 150, 120, 30);
+        editQuantityButton.setBounds(230, 150, 120, 30);
+        deleteButton.setBounds(140, 200, 120, 30);
 
         editPriceButton.addActionListener(this);
         editQuantityButton.addActionListener(this);
         deleteButton.addActionListener(this);
 
-        this.add(infoLabel);
-        this.add(editPriceButton);
-        this.add(editQuantityButton);
-        this.add(deleteButton);
-        this.setBackground(Color.ORANGE);
+        label.add(infoLabel);
+        label.add(editPriceButton);
+        label.add(editQuantityButton);
+        label.add(deleteButton);
+
+        this.add(label);
+        this.setResizable(false);
         this.setVisible(true);
     }
 
@@ -78,8 +81,16 @@ public class NodeDetailsInterface extends JFrame implements ActionListener {
                     int newPrice = Integer.parseInt(newPriceStr);
                     if (newPrice < 0)
                         throw new Exception();
+
                     node.price = newPrice;
+
+                    Node bstNode = bs_Tree.search(node.id);
+                    if (bstNode != null) {
+                        bstNode.price = newPrice;
+                    }
+
                     infoLabel.setText(getNodeInfo());
+                    JOptionPane.showMessageDialog(this, "Price updated in both trees!");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Invalid price entered!");
                 }
@@ -91,8 +102,16 @@ public class NodeDetailsInterface extends JFrame implements ActionListener {
                     int newQty = Integer.parseInt(newQtyStr);
                     if (newQty < 0 || newQty > 1000)
                         throw new Exception();
+
                     node.quantity = newQty;
+
+                    Node bstNode = bs_Tree.search(node.id);
+                    if (bstNode != null) {
+                        bstNode.quantity = newQty;
+                    }
+
                     infoLabel.setText(getNodeInfo());
+                    JOptionPane.showMessageDialog(this, "Quantity updated in both trees!");
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Invalid quantity entered!");
                 }
@@ -101,8 +120,11 @@ public class NodeDetailsInterface extends JFrame implements ActionListener {
             int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to delete this node?", "Confirm",
                     JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                tree.delete(tree.root, node.id);
-                JOptionPane.showMessageDialog(this, "Node Deleted");
+                tree.root = tree.delete(tree.root, node.id);
+
+                bs_Tree.root = bs_Tree.deleteRec(bs_Tree.root, node.id);
+
+                JOptionPane.showMessageDialog(this, "Node is deleted");
                 this.dispose();
                 parentFrame.dispose();
                 new printInterface();

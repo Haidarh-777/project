@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 public class firstInterface extends JFrame implements ActionListener {
     static AVLTree tree = new AVLTree();
+    static BS_Tree BS_tree = new BS_Tree();
 
     ImageIcon backImage;
     JLabel label;
@@ -24,7 +25,7 @@ public class firstInterface extends JFrame implements ActionListener {
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
+        backImage = new ImageIcon("images/first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);

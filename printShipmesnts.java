@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 
 public class printShipmesnts extends JFrame implements ActionListener {
 
-    ArrayList<addShipment> list = addShipment.list;
+    ArrayList<addShipment> list = addShipment.heap;
     ImageIcon backImage;
     JLabel label;
     JButton backButton;
@@ -24,7 +24,7 @@ public class printShipmesnts extends JFrame implements ActionListener {
         this.setSize(1200, 750);
         this.setLayout(null);
 
-        backImage = new ImageIcon("C:\\Users\\ASUS\\Desktop\\project\\images\\first.png");
+        backImage = new ImageIcon("images/first.png");
 
         label = new JLabel();
         label.setBounds(0, 0, 1200, 830);

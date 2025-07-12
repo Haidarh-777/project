@@ -29,6 +29,11 @@ public class addShipment {
                 + " , Quantity : " + quantity + " , Priority : " + priority + " , Date : " + date + "}";
     }
 
+    public String toString1() {
+        return " Destination : " + destination + "\n ID : " + id + "\n Product ID : " + product_id
+                + "\n Quantity : " + quantity + "\n Priority : " + priority + "\n Date : " + date;
+    }
+
     static void insert(addShipment shipment) {
         heap.add(shipment);
         heapifyUp(heap.size() - 1);
