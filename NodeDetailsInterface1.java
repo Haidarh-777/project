@@ -19,8 +19,6 @@ public class NodeDetailsInterface1 extends JFrame implements ActionListener {
         this.bs_Tree = bs_Tree;
         this.parentFrame = parentFrame;
 
-        backImage = new ImageIcon("images/first.png");
-
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(400, 300);
         this.setLayout(null);
@@ -28,7 +26,6 @@ public class NodeDetailsInterface1 extends JFrame implements ActionListener {
 
         label = new JLabel();
         label.setBounds(0, 0, 400, 300);
-        label.setIcon(backImage);
         label.setLayout(null);
 
         infoLabel = new JLabel(getNodeInfo());

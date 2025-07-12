@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class BTree {
     BTreeNode root;
@@ -29,7 +28,6 @@ public class BTree {
 
     public void remove(int key) {
         if (root == null) {
-            System.out.println("The tree is empty");
             return;
         }
 

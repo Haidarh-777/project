@@ -33,7 +33,7 @@ public class insertInterface extends JFrame implements ActionListener {
     int ID;
     int Quantity;
     int Price;
-
+    int capasity;
     JLabel nameLabel;
     JLabel IDLabel;
     JLabel priceLabel;
@@ -153,6 +153,12 @@ public class insertInterface extends JFrame implements ActionListener {
                     || quantityTextField.getText().isEmpty() || priceTextField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Enter all the text fields please",
                         " ", JOptionPane.ERROR_MESSAGE);
+            } else if (Price < 0) {
+                JOptionPane.showMessageDialog(null, "Enter a real value for price",
+                        " ", JOptionPane.ERROR_MESSAGE);
+            } else if (capasity > 10000) {
+                JOptionPane.showMessageDialog(null, "Sorry, We don't have place to a new product",
+                        " ", JOptionPane.ERROR_MESSAGE);
             } else {
 
                 boolean check = IDs.contains(ID);
@@ -161,6 +167,7 @@ public class insertInterface extends JFrame implements ActionListener {
                             " ", JOptionPane.ERROR_MESSAGE);
                 } else {
                     tree.insert(new Node(ID, Name, Price, Quantity));
+                    capasity += Quantity;
                     bs_tree.insert(new Node(ID, Name, Price, Quantity));
                     IDs.add(ID);
                     JOptionPane.showMessageDialog(null, " The product is added :)",

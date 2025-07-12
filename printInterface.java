@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -21,7 +23,7 @@ public class printInterface extends JFrame implements ActionListener {
     String[] treeTypes = { "Max Heap Tree", "B-Tree", "Binary Search Tree", "AVL Tree" };
     int currentTreeTypeIndex = 3;
 
-    JButton backButton, rightButton, leftButton , updatePriorityButton;
+    JButton backButton, rightButton, leftButton, updatePriorityButton;
     JMenuBar menuBar;
     JMenu menu;
     JMenuItem displayItem;
@@ -182,7 +184,7 @@ public class printInterface extends JFrame implements ActionListener {
         JLabel nodeLabel = createNodeLabel("" + shipment.id, x, y);
         nodeLabel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                showShipmentDetails(shipment,"Max Heap Tree");
+                showShipmentDetails(shipment, "Max Heap Tree");
             }
         });
         label.add(nodeLabel);
@@ -208,7 +210,7 @@ public class printInterface extends JFrame implements ActionListener {
             JLabel nodeLabel = createNodeLabel("" + shipment.id, startX + i * (nodeSize + 10), y);
             nodeLabel.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    showShipmentDetails(shipment,"B-Tree");
+                    showShipmentDetails(shipment, "B-Tree");
                 }
             });
             label.add(nodeLabel);
@@ -225,7 +227,7 @@ public class printInterface extends JFrame implements ActionListener {
         }
     }
 
-    private void showShipmentDetails(addShipment shipment , String Type) {
+    private void showShipmentDetails(addShipment shipment, String Type) {
         JFrame detailsFrame = new JFrame("Shipment Details");
         detailsFrame.setSize(350, 250);
         detailsFrame.setLayout(new BorderLayout());
@@ -236,9 +238,9 @@ public class printInterface extends JFrame implements ActionListener {
         detailsFrame.add(new JScrollPane(text), BorderLayout.CENTER);
         detailsFrame.setLocationRelativeTo(this);
         detailsFrame.setVisible(true);
-        if(Type.equals("Max Heap Tree")){
+        if (Type.equals("Max Heap Tree")) {
             updatePriorityButton = new JButton("Update Priority");
-            updatePriorityButton.setBounds(20,160,170,20);
+            updatePriorityButton.setBounds(20, 160, 170, 20);
             updatePriorityButton.setFont(new Font("Consolas", Font.PLAIN, 13));
             updatePriorityButton.setFocusable(false);
             text.add(updatePriorityButton);
@@ -252,20 +254,54 @@ public class printInterface extends JFrame implements ActionListener {
                         try {
                             int newPriority = Integer.parseInt(newPriorityStr);
                             if (newPriority < 0 || newPriority > 2)
-                                throw new Exception();
 
-                            shipment.priority = newPriority;
+                                shipment.priority = newPriority;
 
                             JOptionPane.showMessageDialog(null, "Priority updated.");
                             detailsFrame.dispose();
-                            maxHeapTree.heapify(heapList,0,heapList.size());
+                            maxHeapTree.heapify(heapList, 0, heapList.size());
                             refreshTreeDisplay();
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(null, "Invalid priority entered!");
                         }
                     }
-                }});
+                }
+            });
+        } else if (Type.equals("B-Tree")) {
+            JButton updateDateButton = new JButton("Update Date");
+            updateDateButton.setBounds(20, 190, 170, 20);
+            updateDateButton.setFont(new Font("Consolas", Font.PLAIN, 13));
+            updateDateButton.setFocusable(false);
+            text.add(updateDateButton);
+
+            updateDateButton.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    String newDateStr = JOptionPane.showInputDialog(
+                            null, "Enter new date (yyyy/MM/dd):", shipment.date);
+
+                    if (newDateStr != null) {
+                        try {
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                            LocalDate newDate = LocalDate.parse(newDateStr, formatter);
+                            if (newDate.isBefore(LocalDate.now())) {
+                                JOptionPane.showMessageDialog(null, "Old date can not be added.");
+                                detailsFrame.dispose();
+                            } else {
+
+                                shipment.date = newDate.format(formatter);
+
+                                JOptionPane.showMessageDialog(null, "Date updated.");
+                                detailsFrame.dispose();
+                                refreshTreeDisplay();
+                            }
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(null, "Invalid date format! Use yyyy/MM/dd");
+                        }
+                    }
+                }
+            });
         }
+
     }
 
     @Override

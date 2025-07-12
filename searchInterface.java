@@ -1,7 +1,7 @@
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class searchInterface extends JFrame implements ActionListener {
     ArrayList<Integer> IDs = new ArrayList<>();
+    ArrayList<addShipment> shipments = addShipment.heap;
     AVLTree tree = firstInterface.tree;
 
     Border border = BorderFactory.createLineBorder(Color.red, 3);
@@ -29,6 +30,9 @@ public class searchInterface extends JFrame implements ActionListener {
 
     JButton submitButton;
     JButton backButton;
+
+    JCheckBox shipmentCheckBox;
+    JLabel shipmentLabel;
 
     String Name;
     int ID;
@@ -92,12 +96,24 @@ public class searchInterface extends JFrame implements ActionListener {
         nodeInfoLabel.setForeground(Color.white);
         nodeInfoLabel.setFont(new Font("consolas", Font.PLAIN, 18));
 
+        shipmentCheckBox = new JCheckBox();
+        shipmentCheckBox.setBounds(520, 280, 20, 20);
+        shipmentCheckBox.setOpaque(false);
+        shipmentCheckBox.addActionListener(this);
+
+        shipmentLabel = new JLabel("Shipment");
+        shipmentLabel.setBounds(550, 280, 100, 30);
+        shipmentLabel.setForeground(Color.white);
+        shipmentLabel.setFont(new Font("consolas", Font.PLAIN, 18));
+
         label.add(IDTextField);
         label.add(submitButton);
         label.add(backButton);
         label.add(IDLabel);
         label.add(textLabel);
         label.add(nodeInfoLabel);
+        label.add(shipmentCheckBox);
+        label.add(shipmentLabel);
 
         this.add(label);
         this.setLocationRelativeTo(null);
@@ -116,29 +132,64 @@ public class searchInterface extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == submitButton) {
-            ID = convertToInteger(IDTextField.getText().strip());
-            Node node = tree.search(ID);
-            if (node != null) {
-                existed = true;
+            if (shipmentCheckBox.isSelected()) {
+
+                addShipment foundShipment = null;
+                for (addShipment shipment : shipments) {
+                    if (shipment.id == ID) {
+                        foundShipment = shipment;
+                        break;
+                    }
+                }
+
+                if (foundShipment != null) {
+                    existed = true;
+                    JOptionPane.showMessageDialog(null,
+                            "The shipment is existed \n Do you want the shipment's information?",
+                            " ", JOptionPane.YES_NO_OPTION);
+
+                    nodeInfoLabel.setText(
+                            "<html>" +
+                                    "ID: " + foundShipment.id + "<br>" +
+                                    "Destination: " + foundShipment.destination + "<br>" +
+                                    "Product ID: " + foundShipment.product_id + "<br>" +
+                                    "Quantity: " + foundShipment.quantity + "<br>" +
+                                    "Priority: " + foundShipment.priority + "<br>" +
+                                    "Date: " + foundShipment.date +
+                                    "</html>");
+                } else {
+                    existed = false;
+                    JOptionPane.showMessageDialog(null, "The shipment is not existed ",
+                            " ", JOptionPane.OK_OPTION);
+
+                    nodeInfoLabel.setText("");
+                }
+
             } else {
-                existed = false;
-            }
-            if (existed) {
-                JOptionPane.showMessageDialog(null,
-                        "The shipping parcel is existed \n Do you want the parcel's information?",
-                        " ", JOptionPane.YES_NO_OPTION);
+                ID = convertToInteger(IDTextField.getText().strip());
+                Node node = tree.search(ID);
+                if (node != null) {
+                    existed = true;
+                } else {
+                    existed = false;
+                }
+                if (existed) {
+                    JOptionPane.showMessageDialog(null,
+                            "The shipping parcel is existed \n Do you want the parcel's information?",
+                            " ", JOptionPane.YES_NO_OPTION);
 
-                nodeInfoLabel.setText(
-                        "<html>ID: " + node.id + "<br>" +
-                                "Name: " + node.name + "<br>" +
-                                "Price: " + node.price + "<br>" +
-                                "Quantity: " + node.quantity + "</html>");
+                    nodeInfoLabel.setText(
+                            "<html>ID: " + node.id + "<br>" +
+                                    "Name: " + node.name + "<br>" +
+                                    "Price: " + node.price + "<br>" +
+                                    "Quantity: " + node.quantity + "</html>");
 
-            } else {
-                JOptionPane.showMessageDialog(null, "The shipping parcel is not existed ",
-                        " ", JOptionPane.OK_OPTION);
+                } else {
+                    JOptionPane.showMessageDialog(null, "The shipping parcel is not existed ",
+                            " ", JOptionPane.OK_OPTION);
 
-                nodeInfoLabel.setText("");
+                    nodeInfoLabel.setText("");
+                }
             }
         }
         if (e.getSource() == backButton) {

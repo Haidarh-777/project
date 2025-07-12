@@ -9,10 +9,6 @@ public class Node {
     int height;
 
     Node(int id, String name, int price, int quantity) {
-        if (price < 0)
-            throw new IllegalArgumentException("you have entered negative number");
-        if (quantity > 1000)
-            throw new IllegalArgumentException("Quantity exceeds warehouse capacity");
 
         this.id = id;
         this.name = name;
